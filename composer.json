@@ -1,0 +1,42 @@
+{
+  "name": "Blast Config",
+  "description": "PuliPHP based config package",
+  "minimum-stability": "dev",
+  "license": "GPL",
+  "authors": [
+    {
+      "name": "Marco Bunge",
+      "email": "mjls@web.de"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "league/container": "~2.0",
+    "blast/facades": "dev-master",
+    "puli/repository": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.8.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Blast\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Blast\\Tests\\": "tests"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    }
+  },
+  "scripts": {
+    "test": [
+      "cd vendor/phpunit/phpunit",
+      "phpunit --configuration phpunit.xml"
+    ]
+  }
+}
