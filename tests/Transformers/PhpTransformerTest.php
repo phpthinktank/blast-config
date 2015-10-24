@@ -9,11 +9,15 @@
 namespace Blast\Tests;
 
 
+use Puli\Repository\Api\Resource\BodyResource;
+use Puli\Repository\Api\Resource\Resource;
+use Puli\Repository\FilesystemRepository;
+
 class PhpTransformerTest extends \PHPUnit_Framework_TestCase
 {
     public function testLocatePhpConfig()
     {
-        $resourceBasePath = dirname(__DIR__) . '/assets';
+        $resourceBasePath = dirname(__DIR__) . '/res';
         $repo = new FilesystemRepository($resourceBasePath);
         $config = $repo->get('/config/config.php');
         $this->assertInstanceOf(Resource::class, $config);
@@ -23,7 +27,7 @@ class PhpTransformerTest extends \PHPUnit_Framework_TestCase
     }
     public function testLocateJsonConfig()
     {
-        $resourceBasePath = dirname(__DIR__) . '/assets';
+        $resourceBasePath = dirname(__DIR__) . '/res';
         $repo = new FilesystemRepository($resourceBasePath);
         $config = $repo->get('/config/config.json');
         $this->assertInstanceOf(Resource::class, $config);

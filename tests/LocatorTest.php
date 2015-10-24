@@ -22,9 +22,7 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     {
         $locator = new Locator($this->repository);
         $resource = $locator->locate('/config/config.php');
-
         $this->assertInstanceOf(FilesystemResource::class, $resource);
-
     }
 
     public function testInitiation()
