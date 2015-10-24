@@ -6,13 +6,12 @@
  * Time: 14:46
  */
 
-namespace Blast\Config\Transformers;
+namespace Blast\Config\Loader;
 
 use Puli\Repository\Api\Resource\FilesystemResource;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\Exception\FileNotFoundException;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
-class PhpTransformer implements TransformerInterface
+class PhpLoader implements LoaderInterface
 {
     /**
      * Return valid extension for this transformer
@@ -26,18 +25,19 @@ class PhpTransformer implements TransformerInterface
     /**
      * Load config as Array from resource
      * @param FilesystemResource $resource
-     * @return mixed
+     * @return array
      */
-    public function transform(FilesystemResource $resource)
+    public function load(FilesystemResource $resource)
     {
         $path = $resource->getFilesystemPath();
-        if(!file_exists($path)){
-            throw new FileNotFoundException($path);
-        }
 
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-        if(!$extension !== $this->getExtension()){
-            throw new FileException(sprintf('Invalid extension %s for config file %s', $extension, $path));
+        if($extension !== $this->getExtension()){
+            return false;
+        }
+
+        if(!file_exists($path)){
+            throw new FileNotFoundException($path);
         }
 
         $config = require $path;

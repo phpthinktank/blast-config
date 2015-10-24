@@ -6,12 +6,12 @@
  * Time: 14:49
  */
 
-namespace Blast\Config\Transformers;
+namespace Blast\Config\Loader;
 
 
 use Puli\Repository\Api\Resource\FilesystemResource;
 
-interface TransformerInterface
+interface LoaderInterface
 {
 
     /**
@@ -23,8 +23,8 @@ interface TransformerInterface
     /**
      * Transform resource into a config array
      * @param FilesystemResource $resource
-     * @return mixed
+     * @return array
      */
-    public function transform(FilesystemResource $resource);
+    public function load(FilesystemResource $resource);
 
 }

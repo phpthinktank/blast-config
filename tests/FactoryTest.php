@@ -1,0 +1,41 @@
+<?php
+/*
+*
+* (c) Marco Bunge <marco_bunge@web.de>
+*
+* For the full copyright and license information, please view the LICENSE.txt
+* file that was distributed with this source code.
+*
+* Date: 24.10.2015
+* Time: 23:27
+*/
+
+namespace Blast\Tests;
+
+
+use Blast\Config\Factory;
+use Blast\Config\LocatorInterface;
+use Puli\Repository\FilesystemRepository;
+
+class FactoryTest extends \PHPUnit_Framework_TestCase
+{
+
+
+    public function testCreateFromPath()
+    {
+        $locator = Factory::create(__DIR__ . '/res');
+        $this->assertInstanceOf(LocatorInterface::class, $locator);
+    }
+
+    public function testCreateFromRepository(){
+        $locator = Factory::create(new FilesystemRepository(__DIR__ . '/res'));
+        $this->assertInstanceOf(LocatorInterface::class, $locator);
+    }
+
+    public function testLoadFromPath(){
+        $locator = Factory::create(__DIR__ . '/res');
+        $this->assertInstanceOf(LocatorInterface::class, $locator);
+        $config = Factory::load('/config/config.json', $locator);
+        $this->assertInternalType('array', $config);
+    }
+}

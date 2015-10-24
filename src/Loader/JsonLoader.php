@@ -6,14 +6,14 @@
  * Time: 15:16
  */
 
-namespace Blast\Config\Transformers;
+namespace Blast\Config\Loader;
 
 
 use Puli\Repository\Api\Resource\BodyResource;
 use Puli\Repository\Api\Resource\FilesystemResource;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-class JsonTransformer implements TransformerInterface
+class JsonLoader implements LoaderInterface
 {
 
     /**
@@ -22,7 +22,7 @@ class JsonTransformer implements TransformerInterface
      */
     public function getExtension()
     {
-        return 'php';
+        return 'json';
     }
 
     /**
@@ -30,16 +30,16 @@ class JsonTransformer implements TransformerInterface
      * @param FilesystemResource $resource
      * @return array
      */
-    public function transform(FilesystemResource $resource)
+    public function load(FilesystemResource $resource)
     {
-        if(!($resource instanceof BodyResource)){
-            throw new \InvalidArgumentException('Expect an instance of BodyResource, %s given', get_class($resource));
-        }
-
         $path = $resource->getPath();
         $extension = pathinfo($path, PATHINFO_EXTENSION);
-        if(!$extension !== $this->getExtension()){
-            throw new FileException(sprintf('Invalid extension %s for config file %s', $extension, $path));
+        if($extension !== $this->getExtension()){
+            return false;
+        }
+
+        if(!($resource instanceof BodyResource)){
+            throw new \InvalidArgumentException('Expect an instance of BodyResource, %s given', get_class($resource));
         }
 
         $config = json_decode($resource->getBody(), true);
