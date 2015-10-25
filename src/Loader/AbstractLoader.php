@@ -24,7 +24,7 @@ abstract class AbstractLoader implements LoaderInterface
      */
     public function validateExtension(FilesystemResource $resource)
     {
-        return pathinfo($resource->getPath(), PATHINFO_EXTENSION) !== $this->getExtension();
+        return pathinfo($resource->getPath(), PATHINFO_EXTENSION) === $this->getExtension();
     }
 
     /**

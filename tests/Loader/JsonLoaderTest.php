@@ -26,7 +26,8 @@ class JsonLoaderTest extends \PHPUnit_Framework_TestCase
         $resourceBasePath = dirname(__DIR__) . '/res';
         $repository = new FilesystemRepository($resourceBasePath);
         $loader = new JsonLoader();
-        $resource = Factory::create($repository)->locate('/config/config.json');
+        $factory = new Factory();
+        $resource = $factory->create($repository)->locate('/config/config.json');
         $config = $loader->load($resource);
 
         $this->assertTrue($loader->validateConfig($config, false));
