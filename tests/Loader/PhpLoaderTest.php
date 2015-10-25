@@ -24,6 +24,8 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
         $resource = Factory::create($repository)->locate('/config/config.php');
         $config = $loader->load($resource);
 
+        $this->assertTrue($loader->validateConfig($config, false));
+        $this->assertTrue($loader->validateExtension($resource));
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertFileExists($resource->getFilesystemPath());
         $this->assertEquals('php', pathinfo($resource->getFilesystemPath(), PATHINFO_EXTENSION));

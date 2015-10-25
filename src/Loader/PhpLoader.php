@@ -11,7 +11,7 @@ namespace Blast\Config\Loader;
 use Puli\Repository\Api\Resource\FilesystemResource;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
-class PhpLoader implements LoaderInterface
+class PhpLoader extends AbstractLoader implements LoaderInterface
 {
     /**
      * Return valid extension for this transformer
@@ -29,12 +29,11 @@ class PhpLoader implements LoaderInterface
      */
     public function load(FilesystemResource $resource)
     {
-        $path = $resource->getFilesystemPath();
-
-        $extension = pathinfo($path, PATHINFO_EXTENSION);
-        if($extension !== $this->getExtension()){
+        if(!$this->validateExtension($resource)){
             return false;
         }
+
+        $path = $resource->getFilesystemPath();
 
         if(!file_exists($path)){
             throw new FileNotFoundException($path);
@@ -42,9 +41,7 @@ class PhpLoader implements LoaderInterface
 
         $config = require $path;
 
-        if(!is_array($config)){
-            throw new \RuntimeException('Invalid internal config type! Array expected, %s given!', gettype($config));
-        }
+        $this->validateConfig($config);
 
         return $config;
     }
