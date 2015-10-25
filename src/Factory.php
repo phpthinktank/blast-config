@@ -18,9 +18,7 @@ use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class Factory
 {
-
-
-    public static function create($repository)
+    public function create($repository)
     {
 
         //if repository is a string
@@ -54,7 +52,7 @@ class Factory
      * @param array $config Default configuration, overwrite by found config
      * @return array
      */
-    public static function load($path, LocatorInterface $locator, array $loaders = [], array $config = [])
+    public function load($path, LocatorInterface $locator, array $loaders = [], array $config = [])
     {
         $resource = $locator->locate($path);
 

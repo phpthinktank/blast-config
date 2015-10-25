@@ -32,10 +32,13 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(LocatorInterface::class, $locator);
     }
 
-    public function testLoadFromPath(){
-        $locator = Factory::create(__DIR__ . '/res');
+    public function testLoad(){
+        $factory = new Factory();
+        $locator = $factory->create(__DIR__ . '/res');
+        $config = $factory->load('/config/config.json', $locator);
         $this->assertInstanceOf(LocatorInterface::class, $locator);
-        $config = Factory::load('/config/config.json', $locator);
         $this->assertInternalType('array', $config);
     }
+
+
 }
