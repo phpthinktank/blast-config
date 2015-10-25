@@ -9,13 +9,13 @@
 namespace Blast\Config\Facades;
 
 
-use Blast\Config\LocatorInterface;
+use Blast\Config\FactoryInterface;
 use Blast\Facades\AbstractFacade;
 
 class Config extends AbstractFacade
 {
     protected static function accessor()
     {
-        return LocatorInterface::class;
+        return FactoryInterface::class;
     }
 }
