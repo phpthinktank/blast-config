@@ -15,10 +15,10 @@ namespace Blast\Tests;
 
 use Blast\Config\ConfigServiceProvider;
 use Blast\Config\Facades\Config;
+use Blast\Config\Factory;
 use Blast\Config\FactoryInterface;
 use Blast\Facades\FacadeFactory;
 use League\Container\Container;
-use Prophecy\Comparator\Factory;
 
 class ConfigTest extends \PHPUnit_Framework_TestCase
 {
@@ -28,8 +28,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase
     {
         $container = new Container();
         $container->addServiceProvider(new ConfigServiceProvider());
-        $instance = Config::__instance();
         FacadeFactory::setContainer($container);
+        $instance = Config::__instance();
         $this->assertInstanceOf(FactoryInterface::class, $instance);
         $this->assertInstanceOf(Factory::class, $instance);
     }
