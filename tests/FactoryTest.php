@@ -23,12 +23,14 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateFromPath()
     {
-        $locator = Factory::create(__DIR__ . '/res');
+        $factory = new Factory();
+        $locator = $factory->create(__DIR__ . '/res');
         $this->assertInstanceOf(LocatorInterface::class, $locator);
     }
 
     public function testCreateFromRepository(){
-        $locator = Factory::create(new FilesystemRepository(__DIR__ . '/res'));
+        $factory = new Factory();
+        $locator = $factory->create(new FilesystemRepository(__DIR__ . '/res'));
         $this->assertInstanceOf(LocatorInterface::class, $locator);
     }
 
