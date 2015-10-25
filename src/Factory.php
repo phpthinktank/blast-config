@@ -12,12 +12,17 @@ namespace Blast\Config;
 use Blast\Config\Loader\JsonLoader;
 use Blast\Config\Loader\LoaderInterface;
 use Blast\Config\Loader\PhpLoader;
-use Puli\Repository\Api\Resource\FilesystemResource;
 use Puli\Repository\FilesystemRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
-class Factory
+class Factory implements FactoryInterface
 {
+
+    /**
+     * Create locator from repository. Repository could be a FilesystemRepository or a valid path
+     * @param string|FilesystemRepository $repository
+     * @return Locator
+     */
     public function create($repository)
     {
 
@@ -45,7 +50,7 @@ class Factory
     }
 
     /**
-     * Load configuration by loader
+     * Load configuration from locator
      * @param string $path Path to configuration, relative to configured locator repository path e.g. /config/config.php
      * @param LocatorInterface $locator
      * @param LoaderInterface[] $loaders If is empty, PhpLoader and JsonLoader is loading by default
