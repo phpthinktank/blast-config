@@ -32,27 +32,7 @@ class ConfigServiceProvider extends AbstractServiceProvider implements BootableS
     public function boot()
     {
         $container = $this->getContainer();
-        $container->add(LocatorInterface::class, Locator::class);
-    }
-
-    /**
-     * Set a container
-     *
-     * @param \League\Container\ContainerInterface $container
-     */
-    public function setContainer(ContainerInterface $container)
-    {
-        // TODO: Implement setContainer() method.
-    }
-
-    /**
-     * Get the container
-     *
-     * @return \League\Container\ContainerInterface
-     */
-    public function getContainer()
-    {
-        // TODO: Implement getContainer() method.
+        $container->add(FactoryInterface::class, Factory::class);
     }
 
     /**
