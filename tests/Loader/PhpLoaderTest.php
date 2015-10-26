@@ -23,13 +23,14 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
         $loader = new PhpLoader();
         $factory = new Factory();
         $resource = $factory->create($repository)->locate('/config/config.php');
-        var_dump(require $resource->getFilesystemPath());
-        var_dump($loader->validateConfig($config, false));
+        $configTest = require $resource->getFilesystemPath();
+        var_dump($configTest);
+        var_dump($loader->validateConfig($configTest));
         var_dump($loader->validateExtension($resource));
         $config = $loader->load($resource);
         var_dump($config);
 
-        $this->assertTrue($loader->validateConfig($config, false));
+        $this->assertTrue($loader->validateConfig($config));
         $this->assertTrue($loader->validateExtension($resource));
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertFileExists($resource->getFilesystemPath());
