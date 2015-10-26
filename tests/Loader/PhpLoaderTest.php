@@ -21,7 +21,16 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
      * @var Resource
      */ 
     private $resource;
+    
+    /**
+     * @var Blast\Config\Locator
+     */ 
     private $locator;
+    
+    /**
+     * @var Blast\Config\Loader\LoaderInterface
+     */ 
+    private $loader;
     
     protected function setUp(){
         $resourceBasePath = dirname(__DIR__) . '/res';
@@ -30,11 +39,12 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory();
         $this->locator = $factory->create($repository);
         $this->resource = $this->locator->locate('/config/config.php');
+        $this->loader = new PhpLoader();
     }
     
     public function testConfig()
     {
-        $loader = new PhpLoader();
+        $loader = $this->loader;
         $resource = $this->resource;
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertTrue($loader->validateExtension($resource));
@@ -47,7 +57,7 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testUnknownExtension(){
-        $loader = new PhpLoader();
+        $loader = $this->loader;
         $this->assertFalse($loader->validateExtension($this->locator->locate('/config/config.any')));
     }
 
