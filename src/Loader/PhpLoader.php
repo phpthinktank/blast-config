@@ -45,11 +45,6 @@ class PhpLoader extends AbstractLoader implements LoaderInterface
     public function transform(FilesystemResource $resource)
     {
         $path = $resource->getFilesystemPath();
-
-        if(!file_exists($path)){
-            throw new FileNotFoundException($path);
-        }
-        
         $config = require $path;
         
         return $this->validateConfig($config) ? $config : [];
