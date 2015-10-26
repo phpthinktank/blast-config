@@ -52,6 +52,6 @@ class JsonLoader extends AbstractLoader implements LoaderInterface
     public function transform(FilesystemResource $resource)
     {
         $config = json_decode($resource->getBody(), true);
-        return $this->validate($config) ? $config : [];
+        return $this->validateConfig($config) ? $config : [];
     }
 }
