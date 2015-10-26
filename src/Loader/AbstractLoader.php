@@ -33,13 +33,8 @@ abstract class AbstractLoader implements LoaderInterface
      * @param bool $throw
      * @return bool
      */
-    public function validateConfig($config, $throw = true)
+    public function validateConfig($config)
     {
-        $result = !is_array($config);
-        if ($result && $throw) {
-            throw new \RuntimeException('Invalid internal config type! Array expected, %s given!', gettype($config));
-        }
-
-        return $result;
+        return is_array($config);
     }
 }
