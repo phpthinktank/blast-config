@@ -43,10 +43,10 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException RuntimeException
      */
-    public function testInvalidRepository()
+    public function testInvalidGlob()
     {
         $locator = new Locator($this->repository);
-        $locator->locate(new \stdClass);
+        $locator->locate('/config/*');
     }
 
     protected function setUp()
