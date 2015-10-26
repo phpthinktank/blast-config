@@ -30,8 +30,6 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertFileExists($resource->getFilesystemPath());
         $this->assertEquals('php', pathinfo($resource->getFilesystemPath(), PATHINFO_EXTENSION));
-        var_dump($config);
-        fwrite(STDOUT, gettype($config) . print_r($config, true) . "\n");
         //$this->assertInternalType('array', $config);
     }
 
