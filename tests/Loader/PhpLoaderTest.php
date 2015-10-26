@@ -50,13 +50,5 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
         $loader = new PhpLoader();
         $this->assertFalse($loader->validateExtension($this->locator->locate('/config/config.any')));
     }
-    
-    /**
-     * @expectedException \Symfony\Component\Filesystem\Exception\FileNotFoundException
-     */
-    public function testFileNotFound(){
-        $loader = new PhpLoader();
-        $loader->load($this->locator->locate('/not/existing.file'));
-    }
 
 }
