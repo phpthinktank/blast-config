@@ -21,19 +21,27 @@ use Puli\Repository\FilesystemRepository;
 
 class JsonLoaderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testJsonConfig()
-    {
+        /**
+     * @var Resource
+     */ 
+    private $resource;
+    
+    protected function setUp(){
         $resourceBasePath = dirname(__DIR__) . '/res';
         $repository = new FilesystemRepository($resourceBasePath);
-        $loader = new JsonLoader();
+        $loader = new PhpLoader();
         $factory = new Factory();
-        
-        $resource = $factory->create($repository)->locate('/config/config.json');
+        $this->resource = $factory->create($repository)->locate('/config/config.json');
+    }
+    
+    public function testConfig()
+    {
+        $resource = $this->resource;
         $this->assertTrue($loader->validateExtension($resource));
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertInstanceOf(BodyResource::class, $resource);
         
-        $config = $config = $loader->transform($resource);
+        $config = $loader->transform($resource);
         
         $this->assertTrue($loader->validateConfig($config));
         $this->assertInternalType('array', $loader->transform($resource));
