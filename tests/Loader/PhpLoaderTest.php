@@ -27,7 +27,8 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertTrue($loader->validateExtension($resource));
         $this->assertFileExists($resource->getFilesystemPath());
-        $config = require $resource->getFilesystemPath();
+        
+        $config = $loader->transform($resource);
         $this->assertTrue($loader->validateConfig($config));
         $this->assertInternalType('array', $loader->transform($resource));
         $this->assertInternalType('array', $loader->load($resource));
