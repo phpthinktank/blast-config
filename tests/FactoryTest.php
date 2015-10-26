@@ -39,7 +39,25 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $locator = $factory->create(__DIR__ . '/res');
         $config = $factory->load('/config/config.json', $locator);
         $this->assertInstanceOf(LocatorInterface::class, $locator);
-        //$this->assertInternalType('array', $config);
+        $this->assertInternalType('array', $config);
+    }
+    
+    /**
+     * @expectedException \Symfony\Component\Filesystem\Exception\FileNotFoundException
+     */
+    public function testFailOnCreateFromPath()
+    {
+        $factory = new Factory();
+        $factory->create(__DIR__ . '/unknown/path');
+    }
+    
+    /**
+     * @expectedException \Symfony\Component\Filesystem\Exception\FileNotFoundException
+     */
+    public function testFailOnCreateFromRepository()
+    {
+        $factory = new Factory();
+        $factory->create(new \stdClass);
     }
 
 
