@@ -26,7 +26,7 @@ class JsonLoader extends AbstractLoader implements LoaderInterface
     }
 
     /**
-     * Transform resource into a config array
+     * Load config as Array from resource
      * @param FilesystemResource $resource
      * @return array
      */
@@ -41,10 +41,17 @@ class JsonLoader extends AbstractLoader implements LoaderInterface
             throw new \InvalidArgumentException('Expect an instance of BodyResource, %s given', get_class($resource));
         }
 
+        return $this->transform($resource);
+    }
+    
+    /**
+     * Transform resource into a config array
+     * @param FilesystemResource $resource
+     * @return array 
+     */
+    public function transform(FilesystemResource $resource)
+    {
         $config = json_decode($resource->getBody(), true);
-
-        $this->validateConfig($config);
-
-        return $config;
+        return $this->validate($config) ? $config : [];
     }
 }
