@@ -37,10 +37,6 @@ class JsonLoader extends AbstractLoader implements LoaderInterface
             return false;
         }
 
-        if(!($resource instanceof BodyResource)){
-            throw new \InvalidArgumentException('Expect an instance of BodyResource, %s given', get_class($resource));
-        }
-
         return $this->transform($resource);
     }
     
