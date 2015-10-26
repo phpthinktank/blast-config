@@ -58,7 +58,7 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
     
     public function testUnknownExtension(){
         $loader = $this->loader;
-        $this->assertFalse($loader->validateExtension($this->locator->locate('/config/config.any')));
+        $this->assertFalse($loader->load($this->locator->locate('/config/config.any')));
     }
 
 }
