@@ -48,4 +48,9 @@ class JsonLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $loader->transform($resource));
         $this->assertInternalType('array', $loader->load($resource));
     }
+    
+    public function testUnknownExtension(){
+        $loader = new PhpLoader();
+        $this->assertFalse($loader->validateExtension($this->locator->locate('/config/config.any')));
+    }
 }
