@@ -30,7 +30,6 @@ abstract class AbstractLoader implements LoaderInterface
     /**
      * Validate config. Config should be an arra
      * @param $config
-     * @param bool $throw
      * @return bool
      */
     public function validateConfig($config)
