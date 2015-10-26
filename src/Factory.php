@@ -12,15 +12,18 @@ namespace Blast\Config;
 use Blast\Config\Loader\JsonLoader;
 use Blast\Config\Loader\LoaderInterface;
 use Blast\Config\Loader\PhpLoader;
-use Puli\Repository\Api\Resource\FilesystemResource;
 use Puli\Repository\FilesystemRepository;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
-class Factory
+class Factory implements FactoryInterface
 {
 
-
-    public static function create($repository)
+    /**
+     * Create locator from repository. Repository could be a FilesystemRepository or a valid path
+     * @param string|FilesystemRepository $repository
+     * @return Locator
+     */
+    public function create($repository)
     {
 
         //if repository is a string
@@ -38,7 +41,7 @@ class Factory
 
         //if there is no valid instance cancel creation
         if (!($repository instanceof FilesystemRepository)) {
-            throw new \RuntimeException('Expected instance of FilesystemRepository. %s given', get_class($repository));
+            throw new \RuntimeException(sprintf('Expected instance of FilesystemRepository. %s given', get_class($repository)));
         }
 
         $locator = new Locator($repository);
@@ -47,14 +50,14 @@ class Factory
     }
 
     /**
-     * Load configuration by loader
+     * Load configuration from locator
      * @param string $path Path to configuration, relative to configured locator repository path e.g. /config/config.php
      * @param LocatorInterface $locator
      * @param LoaderInterface[] $loaders If is empty, PhpLoader and JsonLoader is loading by default
      * @param array $config Default configuration, overwrite by found config
      * @return array
      */
-    public static function load($path, LocatorInterface $locator, array $loaders = [], array $config = [])
+    public function load($path, LocatorInterface $locator, array $loaders = [], array $config = [])
     {
         $resource = $locator->locate($path);
 

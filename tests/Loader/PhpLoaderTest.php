@@ -16,18 +16,49 @@ use Puli\Repository\FilesystemRepository;
 
 class PhpLoaderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testLocatePhpConfig()
-    {
+    
+    /**
+     * @var Resource
+     */ 
+    private $resource;
+    
+    /**
+     * @var Blast\Config\Locator
+     */ 
+    private $locator;
+    
+    /**
+     * @var Blast\Config\Loader\LoaderInterface
+     */ 
+    private $loader;
+    
+    protected function setUp(){
         $resourceBasePath = dirname(__DIR__) . '/res';
         $repository = new FilesystemRepository($resourceBasePath);
-        $loader = new PhpLoader();
-        $resource = Factory::create($repository)->locate('/config/config.php');
-        $config = $loader->load($resource);
-
+        
+        $factory = new Factory();
+        $this->locator = $factory->create($repository);
+        $this->resource = $this->locator->locate('/config/config.php');
+        $this->loader = new PhpLoader();
+    }
+    
+    public function testConfig()
+    {
+        $loader = $this->loader;
+        $resource = $this->resource;
         $this->assertInstanceOf(Resource::class, $resource);
+        $this->assertTrue($loader->validateExtension($resource));
         $this->assertFileExists($resource->getFilesystemPath());
-        $this->assertEquals('php', pathinfo($resource->getFilesystemPath(), PATHINFO_EXTENSION));
-        $this->assertInternalType('array', $config);
+        
+        $config = $loader->transform($resource);
+        $this->assertTrue($loader->validateConfig($config));
+        $this->assertInternalType('array', $loader->transform($resource));
+        $this->assertInternalType('array', $loader->load($resource));
+    }
+    
+    public function testUnknownExtension(){
+        $loader = $this->loader;
+        $this->assertFalse($loader->load($this->locator->locate('/config/config.any')));
     }
 
 }

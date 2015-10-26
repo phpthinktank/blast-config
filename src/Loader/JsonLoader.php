@@ -13,7 +13,7 @@ use Puli\Repository\Api\Resource\BodyResource;
 use Puli\Repository\Api\Resource\FilesystemResource;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
-class JsonLoader implements LoaderInterface
+class JsonLoader extends AbstractLoader implements LoaderInterface
 {
 
     /**
@@ -26,28 +26,28 @@ class JsonLoader implements LoaderInterface
     }
 
     /**
-     * Transform resource into a config array
+     * Load config as Array from resource
      * @param FilesystemResource $resource
      * @return array
      */
     public function load(FilesystemResource $resource)
     {
-        $path = $resource->getPath();
-        $extension = pathinfo($path, PATHINFO_EXTENSION);
-        if($extension !== $this->getExtension()){
+
+        if(!$this->validateExtension($resource)){
             return false;
         }
 
-        if(!($resource instanceof BodyResource)){
-            throw new \InvalidArgumentException('Expect an instance of BodyResource, %s given', get_class($resource));
-        }
-
+        return $this->transform($resource);
+    }
+    
+    /**
+     * Transform resource into a config array
+     * @param FilesystemResource $resource
+     * @return array 
+     */
+    public function transform(FilesystemResource $resource)
+    {
         $config = json_decode($resource->getBody(), true);
-
-        if(!is_array($config)){
-            throw new \RuntimeException('Invalid internal config type! Array expected, %s given!', gettype($config));
-        }
-
-        return $config;
+        return $this->validateConfig($config) ? $config : [];
     }
 }

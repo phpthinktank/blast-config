@@ -21,17 +21,48 @@ use Puli\Repository\FilesystemRepository;
 
 class JsonLoaderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testLocateJsonConfig()
-    {
+    /**
+     * @var Resource
+     */ 
+    private $resource;
+    
+    /**
+     * @var Blast\Config\Locator
+     */ 
+    private $locator;
+    
+    /**
+     * @var Blast\Config\Loader\LoaderInterface
+     */ 
+    private $loader;
+    
+    protected function setUp(){
         $resourceBasePath = dirname(__DIR__) . '/res';
         $repository = new FilesystemRepository($resourceBasePath);
-        $loader = new JsonLoader();
-        $resource = Factory::create($repository)->locate('/config/config.json');
-        $config = $loader->load($resource);
-
+        
+        $factory = new Factory();
+        $this->locator = $factory->create($repository);
+        $this->resource = $this->locator->locate('/config/config.json');
+        $this->loader = new JsonLoader();
+    }
+    
+    public function testConfig()
+    {
+        $resource = $this->resource;
+        $loader = $this->loader;
+        $this->assertTrue($loader->validateExtension($resource));
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertInstanceOf(BodyResource::class, $resource);
-        $this->assertEquals('json', pathinfo($resource->getFilesystemPath(), PATHINFO_EXTENSION));
-        $this->assertInternalType('array', $config);
+        
+        $config = $loader->transform($resource);
+        
+        $this->assertTrue($loader->validateConfig($config));
+        $this->assertInternalType('array', $loader->transform($resource));
+        $this->assertInternalType('array', $loader->load($resource));
+    }
+    
+    public function testUnknownExtension(){
+        $loader = $this->loader;
+        $this->assertFalse($loader->load($this->locator->locate('/config/config.any')));
     }
 }

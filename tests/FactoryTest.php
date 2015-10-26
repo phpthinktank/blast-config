@@ -23,19 +23,42 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateFromPath()
     {
-        $locator = Factory::create(__DIR__ . '/res');
+        $factory = new Factory();
+        $locator = $factory->create(__DIR__ . '/res');
         $this->assertInstanceOf(LocatorInterface::class, $locator);
     }
 
     public function testCreateFromRepository(){
-        $locator = Factory::create(new FilesystemRepository(__DIR__ . '/res'));
+        $factory = new Factory();
+        $locator = $factory->create(new FilesystemRepository(__DIR__ . '/res'));
         $this->assertInstanceOf(LocatorInterface::class, $locator);
     }
 
-    public function testLoadFromPath(){
-        $locator = Factory::create(__DIR__ . '/res');
+    public function testLoad(){
+        $factory = new Factory();
+        $locator = $factory->create(__DIR__ . '/res');
+        $config = $factory->load('/config/config.json', $locator);
         $this->assertInstanceOf(LocatorInterface::class, $locator);
-        $config = Factory::load('/config/config.json', $locator);
         $this->assertInternalType('array', $config);
     }
+    
+    /**
+     * @expectedException \Symfony\Component\Filesystem\Exception\FileNotFoundException
+     */
+    public function testFailOnCreateFromPath()
+    {
+        $factory = new Factory();
+        $factory->create(__DIR__ . '/unknown/path');
+    }
+    
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testFailOnCreateFromRepository()
+    {
+        $factory = new Factory();
+        $factory->create(new \stdClass);
+    }
+
+
 }
