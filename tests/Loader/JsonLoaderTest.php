@@ -29,7 +29,7 @@ class JsonLoaderTest extends \PHPUnit_Framework_TestCase
     protected function setUp(){
         $resourceBasePath = dirname(__DIR__) . '/res';
         $repository = new FilesystemRepository($resourceBasePath);
-        $loader = new PhpLoader();
+        
         $factory = new Factory();
         $this->resource = $factory->create($repository)->locate('/config/config.json');
     }
@@ -37,6 +37,7 @@ class JsonLoaderTest extends \PHPUnit_Framework_TestCase
     public function testConfig()
     {
         $resource = $this->resource;
+        $loader = new JsonLoader();
         $this->assertTrue($loader->validateExtension($resource));
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertInstanceOf(BodyResource::class, $resource);
