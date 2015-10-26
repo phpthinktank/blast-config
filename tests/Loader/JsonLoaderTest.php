@@ -21,23 +21,35 @@ use Puli\Repository\FilesystemRepository;
 
 class JsonLoaderTest extends \PHPUnit_Framework_TestCase
 {
-        /**
+    /**
      * @var Resource
      */ 
     private $resource;
+    
+    /**
+     * @var Blast\Config\Locator
+     */ 
+    private $locator;
+    
+    /**
+     * @var Blast\Config\Loader\LoaderInterface
+     */ 
+    private $loader;
     
     protected function setUp(){
         $resourceBasePath = dirname(__DIR__) . '/res';
         $repository = new FilesystemRepository($resourceBasePath);
         
         $factory = new Factory();
-        $this->resource = $factory->create($repository)->locate('/config/config.json');
+        $this->locator = $factory->create($repository);
+        $this->resource = $this->locator->locate('/config/config.json');
+        $this->loader = new JsonLoader();
     }
     
     public function testConfig()
     {
         $resource = $this->resource;
-        $loader = new JsonLoader();
+        $loader = $this->loader;
         $this->assertTrue($loader->validateExtension($resource));
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertInstanceOf(BodyResource::class, $resource);
@@ -50,7 +62,7 @@ class JsonLoaderTest extends \PHPUnit_Framework_TestCase
     }
     
     public function testUnknownExtension(){
-        $loader = new PhpLoader();
+        $loader = $this->loader;
         $this->assertFalse($loader->validateExtension($this->locator->locate('/config/config.any')));
     }
 }
