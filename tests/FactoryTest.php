@@ -52,7 +52,7 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
     }
     
     /**
-     * @expectedException \Symfony\Component\Filesystem\Exception\FileNotFoundException
+     * @expectedException RuntimeException
      */
     public function testFailOnCreateFromRepository()
     {
