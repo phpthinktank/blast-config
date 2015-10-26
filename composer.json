@@ -1,6 +1,7 @@
 {
   "name": "blast/config",
   "description": "Framework agnostic configuration package",
+  "minimum-stability": "dev",
   "keywords": [
     "blast",
     "configuration",
