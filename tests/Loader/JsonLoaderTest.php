@@ -21,7 +21,7 @@ use Puli\Repository\FilesystemRepository;
 
 class JsonLoaderTest extends \PHPUnit_Framework_TestCase
 {
-    public function testLocateJsonConfig()
+    public function testJsonConfig()
     {
         $resourceBasePath = dirname(__DIR__) . '/res';
         $repository = new FilesystemRepository($resourceBasePath);
