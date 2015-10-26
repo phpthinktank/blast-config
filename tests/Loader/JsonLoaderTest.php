@@ -28,14 +28,15 @@ class JsonLoaderTest extends \PHPUnit_Framework_TestCase
         $loader = new JsonLoader();
         $factory = new Factory();
         
+        $resource = $factory->create($repository)->locate('/config/config.json');
         $this->assertTrue($loader->validateExtension($resource));
         $this->assertInstanceOf(Resource::class, $resource);
         $this->assertInstanceOf(BodyResource::class, $resource);
         
-        $resource = $factory->create($repository)->locate('/config/config.json');
-        $config = $loader->load($resource);
-
-        $this->assertTrue($loader->validateConfig($config, false));
-        $this->assertInternalType('array', $config);
+        $config = $config = $loader->transform($resource);
+        
+        $this->assertTrue($loader->validateConfig($config));
+        $this->assertInternalType('array', $loader->transform($resource));
+        $this->assertInternalType('array', $loader->load($resource));
     }
 }
