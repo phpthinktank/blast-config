@@ -28,7 +28,7 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($loader->validateExtension($resource));
         $this->assertFileExists($resource->getFilesystemPath());
         $config = require $resource->getFilesystemPath();
-        var_dump($loader->validateConfig($configTest));
+        var_dump($loader->validateConfig($config));
         var_dump($loader->validateExtension($resource));
         var_dump($config);
 
