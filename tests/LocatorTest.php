@@ -37,7 +37,7 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
     public function testInvalidPath()
     {
         $locator = new Locator($this->repository);
-        $locator->locate('/not/a.file')
+        $locator->locate('/not/a.file');
     }
     
     /**
