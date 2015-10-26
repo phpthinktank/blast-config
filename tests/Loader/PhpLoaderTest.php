@@ -54,7 +54,7 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \Symfony\Component\Filesystem\Exception\FileNotFoundException
      */
-    public function testUnknownExtension(){
+    public function testFileNotFound(){
         $loader = new PhpLoader();
         $loader->load($this->locator->locate('/not/existing.file'));
     }
