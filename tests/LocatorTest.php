@@ -30,6 +30,24 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
         $locator = new Locator($this->repository);
         $this->assertInstanceOf(FilesystemRepository::class, $locator->getRepository());
     }
+    
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testInvalidPath()
+    {
+        $locator = new Locator($this->repository);
+        $locator->locate('/not/a.file')
+    }
+    
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testInvalidRepository()
+    {
+        $locator = new Locator($this->repository);
+        $locator->locate(new \stdClass);
+    }
 
     protected function setUp()
     {
