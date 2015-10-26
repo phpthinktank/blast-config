@@ -24,6 +24,7 @@ class PhpLoaderTest extends \PHPUnit_Framework_TestCase
         $factory = new Factory();
         $resource = $factory->create($repository)->locate('/config/config.php');
         var_dump($resource);
+        var_dump(require $resource->getFilesystemPath());
         $config = $loader->load($resource);
 
         $this->assertTrue($loader->validateConfig($config, false));
