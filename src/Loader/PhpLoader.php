@@ -52,6 +52,6 @@ class PhpLoader extends AbstractLoader implements LoaderInterface
         
         $config = require $path;
         
-        return $this->validate($config) ? $config : [];
+        return $this->validateConfig($config) ? $config : [];
     }
 }
