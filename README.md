@@ -6,6 +6,8 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Coverage Status](https://img.shields.io/coveralls/phpthinktank/blast-config/master.svg?style=flat-square)](https://coveralls.io/github/phpthinktank/blast-config?branch=1.0.x-dev)
 
+Framework agnostic configuration package supporting php and json. More file types under development.
+
 ## Install
 
 Via Composer
@@ -16,7 +18,51 @@ $ composer require blast/config
 
 ## Usage
 
-Documentation in progress
+Only a few lines of code:
+
+```
+<?php
+
+$factory = new Factory();
+
+// define your base location for all configurations
+$locator = $factory->create(__DIR__ . '/res');
+
+// receive config from json as array
+$config = $factory->load('/config/config.json', $locator);
+
+// receive config as array
+$config = $factory->load('/config/config.php', $locator);
+```
+
+### Dependency injection
+
+Configure ServiceProvider and Facade.
+
+```
+<?php
+
+$container = new Container();
+$container->addServiceProvider(new ConfigServiceProvider());
+FacadeFactory::setContainer($container);
+```
+
+Load your configuration.
+
+```
+<?php
+
+// define your base location for all configurations
+Config::create(__DIR__ . '/res');
+
+// receive config from json as array
+$config = Config::load('/config/config.json', $locator);
+
+```
+
+## Further development
+
+Please visit our [milestones](https://github.com/phpthinktank/blast-config/milestones)
 
 ## Change log
 
