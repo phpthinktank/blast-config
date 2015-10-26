@@ -33,7 +33,7 @@ class JsonLoader extends AbstractLoader implements LoaderInterface
     public function load(FilesystemResource $resource)
     {
 
-        if($this->validateExtension($resource)){
+        if(!$this->validateExtension($resource)){
             return false;
         }
 
