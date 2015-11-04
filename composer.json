@@ -1,12 +1,22 @@
 {
-  "name": "Blast Config",
-  "description": "PuliPHP based config package",
+  "name": "blast/config",
+  "description": "Framework agnostic configuration package",
   "minimum-stability": "dev",
-  "license": "GPL",
+  "keywords": [
+    "blast",
+    "configuration",
+    "json",
+    "php",
+    "puliphp"
+  ],
+  "homepage": "https://github.com/phpthinktank/blast-config",
+  "license": "MIT",
   "authors": [
     {
       "name": "Marco Bunge",
-      "email": "mjls@web.de"
+      "email": "mjls@web.de",
+      "homepage": "http://www.marco-bunge.com",
+      "role": "Developer"
     }
   ],
   "require": {

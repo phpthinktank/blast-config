@@ -29,20 +29,24 @@ class PhpLoader extends AbstractLoader implements LoaderInterface
      */
     public function load(FilesystemResource $resource)
     {
-        if($this->validateExtension($resource)){
+        if(!$this->validateExtension($resource)){
             return false;
         }
 
+        return $this->transform($resource);
+    }
+    
+        
+    /**
+     * Transform resource into a config array
+     * @param FilesystemResource $resource
+     * @return array 
+     */
+    public function transform(FilesystemResource $resource)
+    {
         $path = $resource->getFilesystemPath();
-
-        if(!file_exists($path)){
-            throw new FileNotFoundException($path);
-        }
-
         $config = require $path;
-
-        $this->validateConfig($config);
-
-        return $config;
+        
+        return $this->validateConfig($config) ? $config : [];
     }
 }

@@ -41,7 +41,7 @@ class Factory implements FactoryInterface
 
         //if there is no valid instance cancel creation
         if (!($repository instanceof FilesystemRepository)) {
-            throw new \RuntimeException('Expected instance of FilesystemRepository. %s given', get_class($repository));
+            throw new \RuntimeException(sprintf('Expected instance of FilesystemRepository. %s given', get_class($repository)));
         }
 
         $locator = new Locator($repository);
