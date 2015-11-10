@@ -2,6 +2,12 @@
 
 All notable changes of the Blast facades 1.0 release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
+## [1.1.0] - 2015-11-10
+
+### Added
+
+- Add xml loader to generate php configuration from xml
+
 ## [1.0.1] - 2015-11-04
 ### Changed
 
