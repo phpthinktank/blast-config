@@ -12,7 +12,7 @@ Framework agnostic configuration package supporting php, json and xml. More file
 
 Via Composer
 
-``` bash
+```bash
 $ composer require blast/config
 ```
 
@@ -20,7 +20,7 @@ $ composer require blast/config
 
 Only a few lines of code:
 
-```
+```php
 <?php
 
 $factory = new Factory();
@@ -42,7 +42,7 @@ $config = $factory->load('/config/config.php', $locator);
 
 Configure ServiceProvider and Facade.
 
-```
+```php
 <?php
 
 $container = new Container();
@@ -52,7 +52,7 @@ FacadeFactory::setContainer($container);
 
 Load your configuration.
 
-```
+```php
 <?php
 
 // define your base location for all configurations
@@ -73,7 +73,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 ## Testing
 
-``` bash
+```bash
 $ composer test
 ```
 
