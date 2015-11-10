@@ -6,7 +6,7 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 [![Coverage Status](https://img.shields.io/coveralls/phpthinktank/blast-config/master.svg?style=flat-square)](https://coveralls.io/github/phpthinktank/blast-config?branch=1.0.x-dev)
 
-Framework agnostic configuration package supporting php and json. More file types under development.
+Framework agnostic configuration package supporting php, json and xml. More file types under development.
 
 ## Install
 
@@ -30,6 +30,9 @@ $locator = $factory->create(__DIR__ . '/res');
 
 // receive config from json as array
 $config = $factory->load('/config/config.json', $locator);
+
+// receive config from xml as array
+$config = $factory->load('/config/config.xml', $locator)
 
 // receive config as array
 $config = $factory->load('/config/config.php', $locator);
