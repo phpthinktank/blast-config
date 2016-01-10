@@ -1,3 +1,5 @@
 {
-  "test": "value"
+  "test": {
+    "param": "value"
+  }
 }
